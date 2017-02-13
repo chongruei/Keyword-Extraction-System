@@ -3,20 +3,16 @@ package com.kes.document;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
-import com.kes.dbmanage.AccessDB;
-import com.kms.article.Article;
+import com.kes.database.AccessDatabase;
 
 public abstract class Document {	
+	protected static final File databaseFile = new File("KES.accdb");  
 	protected Connection conn = null;
-	
-	
-	public Document(File dbFile) throws SQLException{
-		AccessDB kms = new AccessDB(dbFile);
+		
+	public Document() throws SQLException{
+		AccessDatabase kms = new AccessDatabase(databaseFile);
 		this.conn = kms.getConnection();
 	}
 	
-	public abstract Article searchContentById(String id) throws SQLException;
-	public abstract List<Article> searchAllContent() throws SQLException;
 }

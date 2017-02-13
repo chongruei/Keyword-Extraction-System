@@ -8,26 +8,25 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.kms.article.Article;
+import com.kes.article.Article;
 
 public class SourceDocument extends Document{
-	private String selectAllContentSQL 	= "select * from content";	
-	private String selectContentByIdSQL = "select * from content where id = ?";
+	private final String tableName = "SourceDocument";
+	private final String selectAllContentSql 	= "SELECT * FROM " + tableName;	
+	private final String selectContentByIdSql = "SELECT * FROM " + tableName + " where id = ?";
 	private PreparedStatement stmt;
-	private List<Article> documentArticles;
 	private Logger log;
 	
-	public SourceDocument(File dbFile) throws SQLException {
-		super(dbFile);
+	public SourceDocument() throws SQLException {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public Article searchContentById(String id) throws SQLException{
 		Article article = null;
 		int checkAmount = 0;
 		
-		stmt = conn.prepareStatement(selectContentByIdSQL);
+		stmt = conn.prepareStatement(selectContentByIdSql);
 		stmt.setString(1, id);		
 		ResultSet rs = stmt.executeQuery();
 		
@@ -45,11 +44,10 @@ public class SourceDocument extends Document{
 		return article;
 	}
 	
-	@Override 
 	public List<Article> searchAllContent() throws SQLException{
 		List<Article> articles = null;
 		
-		stmt = conn.prepareStatement(selectAllContentSQL);		
+		stmt = conn.prepareStatement(selectAllContentSql);		
 		ResultSet rs = stmt.executeQuery();
 
 		while(rs.next()){
@@ -62,6 +60,4 @@ public class SourceDocument extends Document{
 		
 		return articles;
 	}
-
-	
 }

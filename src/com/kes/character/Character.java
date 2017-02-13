@@ -1,24 +1,11 @@
 package com.kes.character;
 
 public abstract class Character {
-	
-	private String pos 	= ""; 
-	private String term	= "";
-	
-	public String getTerm() {
-		return term;
-	}
-	
-	public void setTerm(String term) {
-		this.term = term;
-	}
-	
-	public String getPos() {
-		return pos;
-	}
-	
-	public void setPos(String pos) {
-		this.pos = pos;
-	}
-	
+	protected String pos 	= ""; 
+	protected String term	= "";
+		
+	public abstract String getTerm();	
+	public abstract void setTerm(String term);	
+	public abstract String getPos();	
+	public abstract void setPos(String pos);
 }
