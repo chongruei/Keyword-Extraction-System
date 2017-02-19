@@ -1,21 +1,18 @@
 package com.kes.document;
 
-import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.log4j.Logger;
 
 import com.kes.article.Article;
 
 public class SourceDocument extends Document{
-	private final String tableName = "SourceDocument";
-	private final String selectAllContentSql 	= "SELECT * FROM " + tableName;	
+	private final static String tableName = "SourceDocument";
+	private final static String selectAllContentSql 	= "SELECT * FROM " + tableName;	
 	private final String selectContentByIdSql = "SELECT * FROM " + tableName + " where id = ?";
-	private PreparedStatement stmt;
-	private Logger log;
+	private static PreparedStatement stmt;
 	
 	public SourceDocument() throws SQLException {
 		super();
@@ -23,7 +20,7 @@ public class SourceDocument extends Document{
 	}
 
 	public Article searchContentById(String id) throws SQLException{
-		Article article = null;
+		Article article = new Article();
 		int checkAmount = 0;
 		
 		stmt = conn.prepareStatement(selectContentByIdSql);
@@ -44,15 +41,15 @@ public class SourceDocument extends Document{
 		return article;
 	}
 	
-	public List<Article> searchAllContent() throws SQLException{
-		List<Article> articles = null;
+	public static List<Article> searchAllContent() throws SQLException{
+		List<Article> articles = new ArrayList<Article>();
 		
 		stmt = conn.prepareStatement(selectAllContentSql);		
 		ResultSet rs = stmt.executeQuery();
 
 		while(rs.next()){
-			Article article = null;
-			article.setId(rs.getString("Id"));
+			Article article = new Article();
+			article.setId(rs.getString("DocumentId"));
 			article.setContent(rs.getString("Content"));
 			
 			articles.add(article);
